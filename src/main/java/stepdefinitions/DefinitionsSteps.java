@@ -9,6 +9,7 @@ import io.cucumber.java.en.When;
 import manager.PageFactoryManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.asserts.SoftAssert;
 import pages.*;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
@@ -24,7 +25,7 @@ public class DefinitionsSteps {
     AmazonBasicsPage amazonBasicsPage;
     EssentialsForGamersPage essentialsForGamersPage;
     ProductPage productPage;
-    String dataTransferString;
+   private String dataTransferString="init";
     @Before
     public void testsSetUp() {
         chromedriver().setup();
@@ -111,7 +112,7 @@ public class DefinitionsSteps {
     }
 
     @Then("User clicks add to cart button")
-    public void userClickAddToCartButton() {
+    public void userClickAddToCartButton() throws InterruptedException {
         amazonBasicsPage=pageFactoryManager.getAmazonBasicsPage();
         amazonBasicsPage.clickAddToCartButton();
     }
@@ -186,19 +187,24 @@ public class DefinitionsSteps {
     }
 
     @And("User checks visibility of product price")
-    public void userChekVisibilityOfProductPrice() {
+    public void userChekVisibilityOfProductPrice() throws InterruptedException {
+        SoftAssert softAssert = new SoftAssert();
         productPage.isVisibleProductBaseCurrentPrice();
-       dataTransferString= productPage.getTextProductBaseCurrentPrice();
+        dataTransferString= productPage.getTextProductBaseCurrentPrice();
+        softAssert.assertEquals("%",dataTransferString);
     }
 
     @And("User checks does product price match to price in cart")
-    public void userChekDoesProductPriceMatchToPriceInCart() {
-        assertEquals(productPage.getTextCartCurrentPrice(),dataTransferString);
+    public void userChekDoesProductPriceMatchToPriceInCart() throws InterruptedException {
+        productPage=pageFactoryManager.getProductPage();
+        assertEquals(dataTransferString,productPage.getTextCartCurrentPrice());
+
     }
 
     @And("User checks in Stock Inscription")
-    public void userChekInStockInscription() {
-        productPage.isVisibleinStockInscription();
+    public void userChekInStockInscription() throws InterruptedException {
+
+        productPage.isVisibleInStockInscription();
     }
 
     @Then("User checks query generated {string}")
@@ -283,5 +289,11 @@ public class DefinitionsSteps {
     public void userChecksDoesCartEmpty() {
         essentialsForGamersPage=pageFactoryManager.getEssentialsForGamersPage();
         assertEquals( essentialsForGamersPage.getQuantityFromCartIconWith(),"0");
+    }
+
+    @And("User change delivery country")
+    public void userChangeDeliveryCountry() throws InterruptedException {
+        homePage = pageFactoryManager.getHomePage();
+        homePage.clickDeliveryCountryButton();
     }
 }

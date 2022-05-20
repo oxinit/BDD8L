@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/main/resources/CustomBDDScenario.feature",
+@CucumberOptions(features = "src/test/resources/CustomBDDScenario.feature",
                      glue = "stepdefinitions")
 public class RunnerTests {
 }

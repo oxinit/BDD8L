@@ -46,6 +46,11 @@
             <artifactId>cucumber-java</artifactId>
             <version>6.10.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.5</version>
+        </dependency>
 
     </dependencies>
 

@@ -52,7 +52,16 @@ public class HomePage extends BasePage{
     private List<WebElement> InscriptionsForLanguageChangeBox;
 
     @FindBy(xpath = "//input[contains(@aria-labelledby,'save-ann')]")
+
     private WebElement SaveChangesForLanguageBox ;
+    @FindBy(xpath = "//div[contains(@id,'glow-ingress')]")
+    private WebElement deliveryCountryButton;
+    @FindBy(xpath ="//a[contains(text(),'Poland')]")
+    private WebElement polandPopListItem;
+    @FindBy(xpath ="//span[contains(@class,'a-button-span12')]//span[contains(@role,'radio')]")
+    private WebElement popUpCountryList;
+    @FindBy(xpath ="//button[contains(text(),'Done')]")
+    private WebElement buttonDoneOnDeliveryPopup;
     public HomePage(WebDriver driver) {
         super(driver);
     }
@@ -145,6 +154,19 @@ public class HomePage extends BasePage{
     public Boolean doesLanguageButtonInscriptionEnglish(){
         this.waitVisibilityOfElement(30,languageButtonInscription);
         return languageButtonInscription.getText().contains("Eng");
+    }
+
+    public void clickDeliveryCountryButton() throws InterruptedException {
+        waitForPageLoadComplete(10);
+        deliveryCountryButton.click();
+        Thread.sleep(600);
+        popUpCountryList.click();
+        Thread.sleep(600);
+        polandPopListItem.click();
+        Thread.sleep(600);
+        buttonDoneOnDeliveryPopup.click();
+        waitForPageLoadComplete(10);
+
     }
 }
 

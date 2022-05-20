@@ -25,7 +25,9 @@ public class AmazonBasicsPage extends BasePage {
         ProductsElementsList.get(0).click();
     }
 
-    public void clickAddToCartButton() {
+    public void clickAddToCartButton() throws InterruptedException {
+        waitForPageLoadComplete(10);
+        Thread.sleep(600);
         AddToCartButton.click();
     }
     public void waiterProductAddedToCartInscription() {

@@ -11,15 +11,16 @@ public class ProductPage extends BasePage{
     @FindBy(xpath = "//div[@id='imgTagWrapperId']")
     private WebElement ProductImage;
 
-    //div[@class]//span[@id='price_inside_buybox']
-    @FindBy(xpath = "//div[@class]//span[@id='price_inside_buybox']")
+
+    @FindBy(xpath = "//td/span[contains(@class,'apex')]/span[2]")
     private WebElement ProductBaseCurrentPrice;
     //span[contains(@class,'a-color-price hlb-')]
-    @FindBy(xpath = "//span[contains(@class,'a-color-price hlb-')]")
-    private List<WebElement> CartCurrentPrice;
+    @FindBy(xpath = "//div[contains(@class,'ewc-subtotal-value')]/span")
+    private WebElement CartCurrentPrice;
 
     @FindBy(xpath = "//div[@id='availability']//span[contains(@class,'success')]")
     private WebElement inStockInscription;
+
     public ProductPage(WebDriver driver) {
         super(driver);
     }
@@ -31,13 +32,19 @@ public class ProductPage extends BasePage{
         ProductBaseCurrentPrice.isDisplayed();
         ProductBaseCurrentPrice.isEnabled();
     }
-    public String getTextCartCurrentPrice(){
-        return CartCurrentPrice.get(1).getText();
+    public String getTextCartCurrentPrice() throws InterruptedException {
+        waitForPageLoadComplete(10);
+        Thread.sleep(600);
+        return CartCurrentPrice.getText();
     }
-    public String getTextProductBaseCurrentPrice(){
+    public String getTextProductBaseCurrentPrice() throws InterruptedException {
+        waitForPageLoadComplete(10);
+        Thread.sleep(500);
         return ProductBaseCurrentPrice.getText();
     }
-    public void isVisibleinStockInscription() {
+    public void isVisibleInStockInscription() throws InterruptedException {
+        waitForPageLoadComplete(10);
+        Thread.sleep(600);
         inStockInscription.isDisplayed();
         inStockInscription.isEnabled();
     }
